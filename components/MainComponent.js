@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Home from './HomeComponent';
-import Directory from './DirectoryComponent';
+import About from './AboutComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
+import Contact from './ContactComponent';
+import Directory from './DirectoryComponent';
+import Home from './HomeComponent';
 import { View, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -44,10 +46,47 @@ const HomeNavigator = createStackNavigator(
     }
 );
 
+
+const AboutNavigator = createStackNavigator(
+    {
+        Home: { screen: About }
+    },
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            }
+        }
+    }
+);
+
+const ContactNavigator = createStackNavigator(
+    {
+        Home: { screen: Contact }
+    },
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            }
+        }
+    }
+);
+
 const MainNavigator = createDrawerNavigator(
     {
         Home: { screen: HomeNavigator },
-        Directory: { screen: DirectoryNavigator }
+        Directory: { screen: DirectoryNavigator },
+        About: { screen: AboutNavigator },
+        Contact: { screen: ContactNavigator }
     },
     {
         drawerBackgroundColor: '#CEC8FF'
