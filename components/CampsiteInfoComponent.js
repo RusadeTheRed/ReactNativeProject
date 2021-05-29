@@ -27,7 +27,9 @@ function RenderCampsite(props) {
 
 	const view = React.createRef();
 
-	const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
+	const recognizeDrag = ({dx}) => (dx < -200) ;
+// true/false is already returned by arrow function + greater-than operator
+	const recognizeComment = ({dx}) => (dx > 200) ; 
 
 	const panResponder = PanResponder.create({
 		onStartShouldSetPanResponder: () => true,
@@ -55,6 +57,9 @@ function RenderCampsite(props) {
 					],
 					{cancelable: false }
  				);
+			}
+			else if (recognizeComment(gestureState)) {
+					props.onShowModal()
 			}
 			return true;
 		}
@@ -176,7 +181,7 @@ class CampsiteInfo extends Component {
 		const comments = this.props.comments.comments.filter(comment => comment.campsiteId === campsiteId); 
 		return (
 			<ScrollView>
-				<RenderCampsite campsite={campsite} 
+				<RenderCampsite campsite={campsite} // gestures use info from here
 					favorite={this.props.favorites.includes(campsiteId)}
 					markFavorite={() => this.markFavorite(campsiteId)}
 					onShowModal={() => this.toggleModal()}
