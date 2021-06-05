@@ -325,13 +325,18 @@ class Main extends Component {
 		this.props.fetchComments();
 		this.props.fetchPromotions();
 		this.props.fetchPartners();
+		
 
-		NetInfo.fetch().then(connectionInfo => {
-			(Platform.OS === 'ios')
-			? Alert.alert('Initial Network Connectivity Type: ', + connectionInfo.type)
-			: ToastAndroid.show('Initial Network Connectivity Type: ' + 
-				connectionInfo.type, ToastAndroid.LONG);
-		});
+		// as an async/await see below
+		this.showNetInfo()
+		
+		// as a .then 
+		// NetInfo.fetch().then(connectionInfo => {
+		// 	(Platform.OS === 'ios')
+		// 	? Alert.alert('Initial Network Connectivity Type: ', + connectionInfo.type)
+		// 	: ToastAndroid.show('Initial Network Connectivity Type: ' + 
+		// 		connectionInfo.type, ToastAndroid.LONG);
+		// });
 
 		this.unsubscribeNetInfo = NetInfo.addEventListener(connectionInfo => {
 			this.handleConnectivityChange(connectionInfo);
@@ -341,6 +346,14 @@ class Main extends Component {
 	componentWillUnmount() {
 		this.unsubscribeNetInfo();
 	}
+
+	showNetInfo = async () => {
+		const connectionInfo = await NetInfo.fetch();//stuck for a damn semicolon... I get the memes now
+			(Platform.OS === 'ios')
+			? Alert.alert('Initial Network Connectivity Type: ', + connectionInfo.type)
+			: ToastAndroid.show('Initial Network Connectivity Type: ' + 
+				connectionInfo.type, ToastAndroid.LONG)
+		};
 
 	handleConnectivityChange = connectionInfo => {
 		let connectionMsg = 'You are now connected to an active network.';
